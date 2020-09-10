@@ -3,7 +3,7 @@ const elementInput = document.querySelector('#search');
 const songsContainer = document.querySelector('#main-songs');
 const nextOrPrev = document.querySelector('#nextorprev');
 
-const apiUrl = `https://api.lyrics.ovh`;
+const apiUrl = `URLAPI`;
 
 const fetchData = async url => {
     const response = await fetch(url);
@@ -47,7 +47,7 @@ elementForm.addEventListener('submit', event => {
     elementInput.focus();
 
     if (!search) {
-        songsContainer.innerHTML = '<li>Você inseriu uma busca em branco</li>';
+        songsContainer.innerHTML = '<li>You have entered a blank search</li>';
         return;
     }
 

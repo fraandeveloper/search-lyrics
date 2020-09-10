@@ -9,11 +9,11 @@ Project made with javascript to search for lyrics
 ## Project installation
 
 ### 1. Start the project by cloning the search-lyrics repository:
-`$ git clone https://github.com/groselha-io/groselha-tokens.git`
+`$ git clone https://github.com/fraandeveloper/search-lyrics.git`
 
 ### 2. Enter the directory
 
-`$ cd groselha-tokens`
+`$ cd search-lyrics`
 
 ### 3. Install the dependencies:
 `$ npm install`

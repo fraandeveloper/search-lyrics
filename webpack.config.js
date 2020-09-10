@@ -1,6 +1,12 @@
+const DashboardPlugin = require('webpack-dashboard/plugin');
+const OptimizeCSSAssets = require('optimize-css-assets-webpack-plugin');
+
+const devMode = process.env.NODE_ENV === 'development';
+
 const path = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 let config = {
   entry: './src/index.js',
@@ -10,10 +16,48 @@ let config = {
   },
   plugins: [
     new CleanWebpackPlugin({ cleanAfterEveryBuildPatterns: ['public'] }),
+    new DashboardPlugin(),
     new HtmlWebpackPlugin({
       template: './src/index.html',
       minify: false
+    }),
+    new MiniCssExtractPlugin({
+      filename: 'styles.css'
     })
-  ]
+  ],
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        loader: 'babel-loader'
+      }, {
+        test: /\.(sa|sc|c)ss$/,
+        use: [
+          devMode ? 'style-loader' : MiniCssExtractPlugin.loader,
+          'css-loader',
+          'sass-loader'
+        ]
+      }, {
+        test: /\.(jpe?g|png|gif|svg)$/i,
+        loaders: [{
+          loader: 'file-loader',
+          options: {
+            name: 'assets/images/[name].[ext]'
+          }
+        }]
+      }
+    ]
+  },
+  devServer: {
+    contentBase: path.resolve(__dirname, 'public'),
+    open: true
+  }
 };
 module.exports = config;
+
+if (process.env.NODE_ENV === 'production') {
+  module.exports.plugins.push(
+    new OptimizeCSSAssets() // call the css optimizer (minification)
+  );
+}

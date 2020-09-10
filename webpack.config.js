@@ -1,4 +1,5 @@
 const path = require('path');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 let config = {
@@ -8,6 +9,7 @@ let config = {
     path: path.resolve(__dirname, 'public'),
   },
   plugins: [
+    new CleanWebpackPlugin({ cleanAfterEveryBuildPatterns: ['public'] }),
     new HtmlWebpackPlugin({
       template: './src/index.html',
       minify: false
